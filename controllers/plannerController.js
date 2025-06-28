@@ -1,5 +1,5 @@
 const Task = require("../models/Task");
-const getTaskss = async (req, res) => {
+const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find();
     res.status(200).json(tasks);
@@ -40,4 +40,4 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = {getTask, createTask, updateTask, deleteTask};
+module.exports = {getTasks, createTask, updateTask, deleteTask};
