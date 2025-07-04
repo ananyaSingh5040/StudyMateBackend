@@ -1,6 +1,9 @@
-require("dotenv").config();
-const express = require("express");
-const axios = require("axios");
+import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
+import axios from "axios";
+
 
 const solveDoubt = async (req, res) => {
   const { question } = req.body;
@@ -34,4 +37,5 @@ const solveDoubt = async (req, res) => {
   }
 };
 
-module.exports = { solveDoubt };
+export { solveDoubt };
+
