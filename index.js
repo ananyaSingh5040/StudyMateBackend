@@ -4,6 +4,10 @@ import dotenv from "dotenv";
 import connectDB from "./config.js"; // make sure your DB file is renamed to db.js
 import plannerRoutes from "./routes/plannerRoutes.js";
 import doubtRoutes from "./routes/doubtRoutes.js";
+import noteRoutes from "./routes/noteRoutes.js";
+
+
+
 
 dotenv.config();
 const app = express();
@@ -20,6 +24,7 @@ app.get("/", (req, res) => {
 // API Routes
 app.use("/api/planner", plannerRoutes);
 app.use("/api/doubt", doubtRoutes);
+app.use("/api/notes", noteRoutes);
 
 // Connect to DB
 connectDB();
