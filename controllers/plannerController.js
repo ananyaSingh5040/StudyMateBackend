@@ -11,23 +11,19 @@ export const savePlanner = async (req, res) => {
       return res.status(400).json({ error: "No tasks provided" });
     }
 
-    // First, delete any existing planner for this user
-    await Planner.deleteMany({ userId });
+    const updated = await Planner.findOneAndUpdate(
+      { userId },
+      { tasks },
+      { upsert: true, new: true } // ⬅️ create if not found
+    );
 
-    // Create a new planner doc with all tasks
-    const newPlanner = new Planner({
-      userId,
-      tasks
-    });
-
-    const savedPlanner = await newPlanner.save();
-
-    res.status(201).json(savedPlanner.tasks); // ✅ this sends the saved tasks with _ids
+    res.status(201).json(updated.tasks);
   } catch (err) {
     console.error("Save planner error:", err);
     res.status(500).json({ error: "Failed to save planner" });
   }
 };
+
 
 
 // GET - Fetch all planner entries for a user
@@ -41,7 +37,7 @@ export const getPlanner = async (req, res) => {
 
     if (!planner) return res.status(200).json([]); // return empty array if not found
 
-    res.status(200).json(planner.tasks); // ✅ send only tasks
+   res.status(200).json({ tasks: planner.tasks });
   } catch (err) {
     console.error("Fetch planner error:", err);
     res.status(500).json({ error: "Failed to fetch planner" });
